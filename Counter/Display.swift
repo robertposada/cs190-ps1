@@ -154,12 +154,19 @@ class Display: UIView {
         let context = UIGraphicsGetCurrentContext()!
         let bounds = self.bounds
         let segmentHeight = bounds.size.height
-        let xOrigin = bounds.origin.x
+        let segmentWidth = (1/15)*bounds.size.width
+        var xOrigin = bounds.origin.x
         let yOrigin = bounds.origin.y
+        
         // This needs re-doing. The segmentWidth is the whole view width. It should only be one-fifteenth of that.
-        let sscRect = CGRectMake(xOrigin, yOrigin, bounds.size.width, segmentHeight)
+        var sscRect = CGRectMake(xOrigin, yOrigin, segmentWidth, segmentHeight)
         // This needs completing. It only draws one SSC. It needs to be put in a loop to show all 15 SSCs.
-        drawSSC(context, sscRect:sscRect, mask:segmentMasks[8])
+        for segmentMask in masks {
+            drawSSC(context, sscRect:sscRect, mask: segmentMask)
+            xOrigin += segmentWidth
+            sscRect = CGRectMake(xOrigin, yOrigin, segmentWidth, segmentHeight)
+        }
+
     }
 
 }
